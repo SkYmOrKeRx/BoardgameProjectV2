@@ -1,27 +1,26 @@
 ﻿
-namespace BoardgameProjectV2.Menu;                              
+namespace BoardgameProjectV2.Menus;                              
 
 
 public class MenuConfirmation: Menu
 {
     public static void MenuSelectedConfirmation(Menu selectedMenu)
     {
-        Menu newMenu = new Menu();
-        newMenu.DisplayTitle(); 
+        selectedMenu.DisplayTitle(); 
         Console.WriteLine($"{GetMenuName(selectedMenu)}");
         Console.WriteLine("\nBefore continue, make sure you want to access this menu.");
         Console.WriteLine("\nPlease confirm by pressing 'Enter' key or leave with the'Esc' key\");");
         var keyConfirmation = Console.ReadKey(true);
         if (keyConfirmation.Key == ConsoleKey.Escape)
         {
-            newMenu.DisplayTitle();
+            selectedMenu.DisplayTitle();
             Console.WriteLine("\n\n... Leaving this menu in 2 seconds...");
             Thread.Sleep(2000);
             ShowMainMenu();
         }
         else if (keyConfirmation.Key == ConsoleKey.Enter)
         {
-            newMenu.DisplayTitle();
+            selectedMenu.DisplayTitle();
             //Console.WriteLine("\n.. Redirecting you to the selected menu ...");
             //Thread.Sleep(2000);
             //MenuAddBoardgame menuAddBoardgame = new();
@@ -29,7 +28,7 @@ public class MenuConfirmation: Menu
         }
         else
         {
-            newMenu.DisplayTitle();
+            selectedMenu.DisplayTitle();
             Console.WriteLine("\n... You typed something wrong! Leaving this menu in 2 seconds...");
             Thread.Sleep(2000);
                 ShowMainMenu();
@@ -66,5 +65,13 @@ public class MenuConfirmation: Menu
         
     }
 
+    public override void ShowMenu()
+    {
+        throw new NotImplementedException();
+    }
 
+    public override void DisplayTitle()
+    {
+        throw new NotImplementedException();
+    }
 }

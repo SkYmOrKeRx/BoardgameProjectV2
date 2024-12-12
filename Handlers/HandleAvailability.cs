@@ -1,11 +1,11 @@
-﻿
+﻿using BoardgameProjectV2.Menus;
 namespace BoardgameProjectV2.Handlers;
 
 internal class HandleAvailability
 {
     public static bool HandleBoardgameAvailability(int i)
     {
-        Menu.Menu newMenu = new();
+        MenuAddBoardgame newMenu = new();
         while (true)
         {
             Console.Write($"\nField {i + 1}: Boardgame is available? Type 'Yes' or 'No': ");

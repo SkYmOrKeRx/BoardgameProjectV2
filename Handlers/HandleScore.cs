@@ -1,13 +1,15 @@
-﻿namespace BoardgameProjectV2.Handlers;
+﻿using BoardgameProjectV2.Menus;
+
+namespace BoardgameProjectV2.Handlers;
 
 internal class HandleScore
 {
     public static int HandleBoardgameScore(int i)
     {
-        Menu.Menu newMenu = new();
+        MenuAddBoardgame newMenuAddboardgame = new();
         while (true)
         {
-            newMenu.DisplayTitle();
+            newMenuAddboardgame.DisplayTitle();
             Console.Write($"\nField {i + 1}: Boardgame score between 0 to 10: ");
             string checkInput = (Console.ReadLine()!);
                                                                                   
@@ -15,7 +17,7 @@ internal class HandleScore
             {
                 Console.WriteLine("\n\n... You typed something wrong! Try again!");
                 Thread.Sleep(2000);
-                newMenu.DisplayTitle();
+                newMenuAddboardgame.DisplayTitle();
             }
             else
             {

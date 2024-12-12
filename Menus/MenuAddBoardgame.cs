@@ -1,8 +1,7 @@
 ﻿
 using BoardgameProjectV2.Handlers;
 using BoardgameProjectV2.Modelo;
-
-namespace BoardgameProjectV2.Menu;
+namespace BoardgameProjectV2.Menus;
 
 internal class MenuAddBoardgame : Menu
 {
@@ -14,8 +13,21 @@ internal class MenuAddBoardgame : Menu
     private float _price;
     private int _score;
 
-    public void ShowMenuInstructions()
+    private string menuName = "***ADD A BOARDGAME MENU***";
+
+    public override void DisplayTitle()
     {
+        Console.Clear();
+
+        Console.WriteLine("***************************************************");
+        Console.WriteLine(welcomeTitle);
+        Console.WriteLine("***************************************************");
+        Console.WriteLine(menuName);
+
+    }
+
+    public override void ShowMenu()
+    { 
         //MenuAddBoardgame thisMenu = new MenuAddBoardgame();
         MenuConfirmation.MenuSelectedConfirmation(this);
         AddBoardgame();
@@ -80,12 +92,6 @@ internal class MenuAddBoardgame : Menu
         Console.ReadKey();
 
         ShowMainMenu();
-    }
-
-    public override void DisplayTitle()
-    {
-        base.DisplayTitle();
-        Console.WriteLine("***ADD A BOARDGAME MENU***");
     }
 
 }

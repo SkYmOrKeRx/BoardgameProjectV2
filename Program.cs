@@ -1,7 +1,10 @@
-﻿using BoardgameProjectV2.Menu;
-using BoardgameProjectV2.Modelo;    
+﻿using BoardgameProjectV2.Menus;  
 
 
 
 // Starting program
-Menu.ShowMainMenu();
+MenuMain menuMain = new MenuMain(); 
+menuMain.ShowMenu();
+
+
+                                                            
