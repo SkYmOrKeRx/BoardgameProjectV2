@@ -28,16 +28,12 @@ internal class MenuAddBoardgame : Menu
 
     public override void ShowMenu()
     { 
-        //MenuAddBoardgame thisMenu = new MenuAddBoardgame();
-        MenuConfirmation.MenuSelectedConfirmation(this);
-        AddBoardgame();
-                                                        
+        var menuConfirmation = MenuConfirmation.MenuSelectedConfirmation(this);
+        if (menuConfirmation) AddBoardgame();                                                 
     }
 
     public void AddBoardgame()
     {
-        List<string> strings = new List<string>();
-
         DisplayTitle();
         Console.WriteLine("\n\nAll right! Let's register a new boardgame!!");
         Thread.Sleep(3000);
@@ -48,19 +44,11 @@ internal class MenuAddBoardgame : Menu
             switch (i)
             {
                 case 0:
-                    Console.Write($"\nField {i + 1}: Boardgame name: ");
-                    _name = Console.ReadLine()!;
-                    DisplayTitle();
-                    Console.WriteLine($"\n\n({i + 1}) {_name} was succesfully registered!");
-                    Thread.Sleep(2000);
+                    _name  = HandleNullInput.HandleBoardgameNullInput(i);
                     break;
 
                 case 1:
-                    Console.Write($"\nField {i + 1}: Boardgame Description: ");
-                    _description = Console.ReadLine()!;
-                    DisplayTitle();
-                    Console.WriteLine($"\n\n({i + 1})  The following description was succesfully registered: {_description}");
-                    Thread.Sleep(3500);
+                    _description = HandleNullInput.HandleBoardgameNullInput(i);
                     break;
 
                 case 2:
@@ -85,13 +73,14 @@ internal class MenuAddBoardgame : Menu
 
         DisplayTitle();
         Console.WriteLine($"\n\nCongratulations on registering {newBoardgame.Name} to the database" +
-                            "\nCheck it out!"); 
+                            "\nCheck it out!");
 
+        BoardgameManager.AddBoardgameToDB(newBoardgame);
         newBoardgame.ShowDetails();
         Console.WriteLine("\n\n\n\nPress any key to get back to the main menu!");
         Console.ReadKey();
 
-        ShowMainMenu();
+        menuOptions[1].ShowMenu();
     }
 
 }

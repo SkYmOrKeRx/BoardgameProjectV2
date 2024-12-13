@@ -28,7 +28,7 @@ internal class HandleAvailability
                 newMenu.DisplayTitle();
                 Console.WriteLine("\n\n... You typed something wrong! Try again!");
                 Thread.Sleep(2000);
-                newMenu.DisplayTitle();
+                //newMenu.DisplayTitle();
             }
         }
     }

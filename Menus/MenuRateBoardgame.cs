@@ -6,15 +6,15 @@ namespace BoardgameProjectV2.Menus;
 internal class MenuRateBoardgame: Menu
 {
 
-    List<Boardgame> boardgamesList = new();
+    //List<Boardgame> boardgamesList = new();
+
+    private string menuName = "***RATE A BOARDGAME MENU***";
 
     public override void ShowMenu()
     {
-        MenuConfirmation.MenuSelectedConfirmation(this);
-        RateBoardgameMenu();
+        if (MenuConfirmation.MenuSelectedConfirmation(this)) RateBoardgameMenu();
+        else throw new Exception("Sei la??");
     }
-
-    private string menuName = "***RATE A BOARDGAME MENU***";
 
     public override void DisplayTitle()
     {
@@ -30,39 +30,24 @@ internal class MenuRateBoardgame: Menu
 
     public void RateBoardgameMenu()
     {
-
+        //update/load all registered boardgames in database
+        var registeredBoardgamesInDB = BoardgameManager.LoadAllBoardgames();
 
         DisplayTitle();
         Console.WriteLine("\n\nAll right! Let's rate a boardgame!!");
         Thread.Sleep(3000);
 
-        
+        DisplayTitle();
+        Console.WriteLine("\n\nLoading registered boardgames in database...");
 
-        //DisplayTitle();
-        //Console.Write("In this menu, a new boardgame will be added to the database.\n" +
-        //              "\n7 Fields will be required to be informed before adding it." +
-        //              "\n\nPlease confirm by pressing 'Enter' key or leave with the'Esc' key");
-        //var keyConfirmation = Console.ReadKey(true);
-        //if (keyConfirmation.Key == ConsoleKey.Escape)
-        //{
-        //    DisplayTitle();
-        //    Console.WriteLine("\n\n... Leaving this menu in 2 seconds...");
-        //    Thread.Sleep(2000);
-        //    ShowMainMenu();
-        //}
-        //else if (keyConfirmation.Key == ConsoleKey.Enter)
-        //{
-        //    DisplayTitle();
-        //    Console.WriteLine("\nAll right! Let's get started and add some boardgames!");
-        //    Thread.Sleep(2000);
-        //    AddBoardgame();
-        //}
-        //else
-        //{
-        //    DisplayTitle();
-        //    Console.WriteLine("\n\n... You typed something wrong!\n Leaving this menu in 2 seconds...");
-        //    Thread.Sleep(2000);
-        //    ShowMainMenu();
-        //}
+        int i = 0;
+        foreach (Boardgame boardgame in registeredBoardgamesInDB)
+        {
+            Console.WriteLine($"#{i}: {boardgame.Name}");
+            i++;
+            Thread.Sleep(100);
+        }
+
+        menuOptions[3].ShowMenu();
     }
 }

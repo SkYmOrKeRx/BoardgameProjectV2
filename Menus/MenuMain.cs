@@ -12,8 +12,8 @@ internal class MenuMain : Menu
         while (true)
         {
             DisplayTitle();
-            Console.WriteLine("Welcome to the world's best Boardgame database!\n\n");
-            Console.WriteLine("Please select an option:" +
+            Console.WriteLine("\nWelcome to the world's best Boardgame database!");
+            Console.WriteLine("\nPlease select an option:" +
                 "\n1-Add a new boardgame to the database" +
                 "\n2-Edit an registered board game and their details" +
                 "\n3-Rate a boardgame" +
@@ -23,19 +23,22 @@ internal class MenuMain : Menu
 
             if (int.TryParse(keyConfirmation.KeyChar.ToString(), out int menuId))
             {
-                if ((menuId > 0 || menuId < 5))
+                if (menuId == 4) 
+                { 
+                    Console.WriteLine("\nExiting application...");
+                    Thread.Sleep(2000); 
+                    Environment.Exit(0);
+                }
+                else if (menuId < 0 || menuId > 4)
                 {
-                    if (menuId == 1) { ((MenuAddBoardgame)menuOptions[menuId]).ShowMenu(); }
-                    if (menuId == 2) { ((MenuEditBoardgame)menuOptions[menuId]).ShowMenu(); }
-                    if (menuId == 3) { ((MenuRateBoardgame)menuOptions[menuId]).ShowMenu(); }
-                    if (menuId == 4) { Console.WriteLine("\nExiting application..."); Thread.Sleep(2000); Environment.Exit(0); }
+                    DisplayTitle();
+                    Console.WriteLine($"\n\n... There's no option such as '{keyConfirmation.KeyChar.ToString()}'! Try again!");
+                    Thread.Sleep(2000);
+                    DisplayTitle();
                 }
                 else
                 {
-                    DisplayTitle();
-                    Console.WriteLine($"\n\n... There's no option such as {keyConfirmation.KeyChar.ToString()}! Try again!");
-                    Thread.Sleep(2000);
-                    DisplayTitle();
+                    menuOptions[menuId].ShowMenu();
                 }
             }
             else
