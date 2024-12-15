@@ -7,7 +7,8 @@ public abstract class Menu
     {
         { 1, new MenuAddBoardgame() },
         { 2, new MenuEditBoardgame() },
-        { 3, new MenuRateBoardgame() }
+        { 3, new MenuRateBoardgame() },
+        { 9, new MenuMain()         }
     };
 
     public string welcomeTitle = "░J░M░F░C░'░S░ ░B░O░A░R░D░G░A░M░E░ ░D░A░T░A░B░A░S░E░";

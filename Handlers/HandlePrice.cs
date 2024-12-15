@@ -10,7 +10,7 @@ internal class HandlePrice
         while (true)
         {
             newMenuAddBoardgame.DisplayTitle();
-            Console.Write($"\nField {i + 1}: Boardgame selling price: ");
+            Console.Write($"\n(5/6)Field {i + 1}: Boardgame selling price: ");
             var checkInput = Console.ReadLine()!;
             if ((!float.TryParse(checkInput, out float _price) || string.IsNullOrWhiteSpace(checkInput)) || checkInput.Contains(" ") || float.Parse(checkInput) < 0)
             {

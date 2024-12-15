@@ -4,7 +4,7 @@ namespace BoardgameProjectV2.Handlers;
 
 internal class HandleNullInput
 {
-    public static string HandleBoardgameNullInput(int i)
+    public static string HandleBoardgameNullInput(int i, string boardgameName)
     {
         MenuAddBoardgame newMenu = new MenuAddBoardgame();
         while (true)
@@ -13,11 +13,11 @@ internal class HandleNullInput
 
             if (i == 0)
             {
-                Console.Write($"\nField {i + 1}: Boardgame name: ");
+                Console.Write($"\n(1/6)Field {i + 1}: Boardgame name: ");
             }
             if (i == 1)
             {
-                Console.Write($"\nField {i + 1}: Boardgame description: ");
+                Console.Write($"\n(2/6)Field {i + 1}: Boardgame description: ");
             }
                 
             var boardgametxt = Console.ReadLine();
@@ -31,7 +31,7 @@ internal class HandleNullInput
                 }
                 if (i == 1)
                 {
-                    Console.WriteLine($"\n\n({i + 1}) {boardgametxt.Trim()} was succesfully added to the description!");
+                    Console.WriteLine($"\n\n({i + 1}) {boardgametxt.Trim()} was succesfully added to the {boardgameName}'s description!");
                     Thread.Sleep(3500);
                 }
                 

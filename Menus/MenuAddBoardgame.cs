@@ -44,15 +44,15 @@ internal class MenuAddBoardgame : Menu
             switch (i)
             {
                 case 0:
-                    _name  = HandleNullInput.HandleBoardgameNullInput(i);
+                    _name  = HandleNullInput.HandleBoardgameNullInput(i, _name!);
                     break;
 
                 case 1:
-                    _description = HandleNullInput.HandleBoardgameNullInput(i);
+                    _description = HandleNullInput.HandleBoardgameNullInput(i, _name!);
                     break;
 
                 case 2:
-                    _launchDate = HandleLaunchDate.HandleUserInput(i);
+                    _launchDate = HandleLaunchDate.HandleLaunchDateInput(i);
                     break;
 
                 case 3:
@@ -80,7 +80,7 @@ internal class MenuAddBoardgame : Menu
         Console.WriteLine("\n\n\n\nPress any key to get back to the main menu!");
         Console.ReadKey();
 
-        menuOptions[1].ShowMenu();
+        menuOptions[9].ShowMenu();
     }
 
 }

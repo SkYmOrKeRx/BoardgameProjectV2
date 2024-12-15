@@ -4,13 +4,13 @@ namespace BoardgameProjectV2.Handlers;
 
 internal class HandleLaunchDate
 {
-    public static int HandleUserInput(int i)
+    public static int HandleLaunchDateInput(int i)
     {
         MenuAddBoardgame newMenuAddBoardgame = new();
         while (true)
         {
             newMenuAddBoardgame.DisplayTitle();
-            Console.Write($"\nField {i + 1}: Boardgame Launch date in a 4 digit format: ");
+            Console.Write($"\n(3/6)Field {i + 1}: Boardgame Launch date in a 4 digit format: ");
             var checkInput = Console.ReadLine();
                                                                                                                                     
             if (checkInput.Contains(" ") || string.IsNullOrWhiteSpace(checkInput) || checkInput.Length != 4 || !int.TryParse(checkInput, out int _launchDate) | int.Parse(checkInput) < 0 )

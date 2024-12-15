@@ -8,7 +8,7 @@ internal class HandleAvailability
         MenuAddBoardgame newMenu = new();
         while (true)
         {
-            Console.Write($"\nField {i + 1}: Boardgame is available? Type 'Yes' or 'No': ");
+            Console.Write($"\n(4/6)Field {i + 1}: Boardgame is available? Type 'Yes' or 'No': ");
             var checkBool = Console.ReadLine()!;
             newMenu.DisplayTitle();
             if (checkBool.Trim().ToLower() == "yes")

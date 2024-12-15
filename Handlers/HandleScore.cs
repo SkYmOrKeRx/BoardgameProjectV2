@@ -10,7 +10,7 @@ internal class HandleScore
         while (true)
         {
             newMenuAddboardgame.DisplayTitle();
-            Console.Write($"\nField {i + 1}: Boardgame score between 0 to 10: ");
+            Console.Write($"\n(6/6)Field {i + 1}: Boardgame score between 0 to 10: ");
             string checkInput = (Console.ReadLine()!);
                                                                                   
             if ((!float.TryParse(checkInput, out float _price) || string.IsNullOrWhiteSpace(checkInput)) || ((int.Parse(checkInput) < 0) || (int.Parse(checkInput) > 10)))
