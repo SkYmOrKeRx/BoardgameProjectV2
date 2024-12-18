@@ -1,13 +1,11 @@
-﻿
-using BoardgameProjectV2.Handlers;
+﻿using BoardgameProjectV2.Handlers;
 using BoardgameProjectV2.Modelo;
 
 namespace BoardgameProjectV2.Menus;
 
 internal class MenuRateBoardgame : Menu
 {
-
-    //List<Boardgame> boardgamesList = new();
+    string _string1 = "\n\nSelect the number corresponding to the boardgame to rate it: ";
 
     private string menuName = "***RATE A BOARDGAME MENU***";
 
@@ -33,11 +31,11 @@ internal class MenuRateBoardgame : Menu
     {
 
         string userInput;
+        string userInput2;
         int newBoardgameScore = 0;
-        int newBoardgameIndex = 0;
-        MenuRateBoardgame rateBoardgameMenu = new MenuRateBoardgame();
+        int newBoardgameNumber = 0;
+        MenuRateBoardgame newMenuRateBoardgame = new();
         List<Boardgame> registeredBoardgames = BoardgameManager.LoadAllBoardgames();
-
 
         DisplayTitle();
         Console.WriteLine("\n\nAll right! Let's rate a boardgame!!");
@@ -46,7 +44,7 @@ internal class MenuRateBoardgame : Menu
         DisplayTitle();
         Console.WriteLine("\n\nLoading registered boardgames in database...");
 
-        if (BoardgameManager.registeredBoardgames.Count <= 0)
+        if (registeredBoardgames.Count <= 0)
         {
             DisplayTitle();
             Console.WriteLine("\n\nNo boardgames have been found in the database ;(");
@@ -57,11 +55,13 @@ internal class MenuRateBoardgame : Menu
             {
                 DisplayTitle();
                 BoardgameManager.ListAllBoardgamesInDB();
+       
                 Console.Write("\n\nSelect the number corresponding to the boardgame to rate it: ");
                 userInput = Console.ReadLine()!;
-                if (int.TryParse(userInput, out int result))
+
+                if (int.TryParse(userInput, out newBoardgameNumber))
                 {
-                    if ((result <= 0) || (result > BoardgameManager.registeredBoardgames.Count))
+                    if ((newBoardgameNumber < 1) || (newBoardgameNumber > registeredBoardgames.Count))
                     {
                         DisplayTitle();
                         Console.WriteLine($"\n\n... {userInput} is not a valid option! Try again");
@@ -77,18 +77,16 @@ internal class MenuRateBoardgame : Menu
                 }
             }
 
-            newBoardgameIndex = int.Parse(userInput);
-
             while (true)
             {
                 DisplayTitle();
-                Console.WriteLine($"\n\nYou chose {newBoardgameIndex}-{registeredBoardgames[newBoardgameIndex].Name}");
-                Console.Write($"\n\nPlease rate it from 0 to 10:");
-                userInput = Console.ReadLine()!;
+                Console.WriteLine($"\n\nYou chose {newBoardgameNumber}-{registeredBoardgames[newBoardgameNumber-1].Name}");
+                Console.Write($"\n\nPlease rate it from 0 to 10: ");
+                userInput2 = Console.ReadLine()!;
 
-                if (int.TryParse(userInput, out newBoardgameScore))
+                if (int.TryParse(userInput2, out newBoardgameScore))
                 {
-                    if (newBoardgameScore <= 0 || newBoardgameScore > 10)
+                    if (newBoardgameScore < 0 || newBoardgameScore > 10)
                     {
                         DisplayTitle();
                         Console.WriteLine($"\n\n... {newBoardgameScore} is not a valid option! Try again");
@@ -104,7 +102,12 @@ internal class MenuRateBoardgame : Menu
                 }
             }
 
-            Console.WriteLine($"\n\nCongratulations!! You rated {newBoardgameIndex}-{registeredBoardgames[newBoardgameIndex].Name} with a score of {newBoardgameScore} points");
+            Console.WriteLine($"\n\nCongratulations!! You rated {newBoardgameNumber}-{registeredBoardgames[newBoardgameNumber-1].Name} with a score of {newBoardgameScore} points");
+            //BoardgameManager.registeredBoardgames[newBoardgameNumber-1].Score = newBoardgameScore;
+            Console.WriteLine(BoardgameManager.registeredBoardgames[newBoardgameNumber - 1].Score); 
+            //BoardgameManager.registeredBoardgames[newBoardgameNumber-1].Scores.Add(newBoardgameScore);
+
+            Console.WriteLine($"{registeredBoardgames[newBoardgameNumber-1].Name} - Average Score {registeredBoardgames[newBoardgameNumber - 1].ScoresAverage}");
 
             Console.WriteLine("\n\nPress any key to get back to the main menu!");
             Console.ReadKey();

@@ -1,11 +1,13 @@
 ﻿
 
+using static System.Formats.Asn1.AsnWriter;
+
 namespace BoardgameProjectV2.Modelo;
 
 
 internal class Boardgame
 {
-    public static int boardgameCount = 1;
+    public static int boardgameCount = 0;
 
     public Boardgame(string name, string description, int launchDate, bool isAvailable, float price, int score)
     {
@@ -15,7 +17,7 @@ internal class Boardgame
         LaunchDate = launchDate;
         IsAvailable = isAvailable;
         Price = price;
-        Score = score;
+        Scores?.Add(score);
     }
 
     public string Name { get; set; }
@@ -29,11 +31,13 @@ internal class Boardgame
     public float Price { get; set; }
 
     public int Score { get; set; }
-
+    
     public int Rank { get; set; } 
     
     public int Index { get; set; }
 
+    public List<int> Scores { get; set; }
+        
     public void ShowDetails()
     {                                                        
         Console.WriteLine($"\n\nShowing #{Index} {Name} details:");
@@ -41,8 +45,11 @@ internal class Boardgame
         Console.WriteLine($"\nLaunchDate: {LaunchDate}");
         Console.WriteLine($"\nAvailable to purchase?: {(IsAvailable ? "Yes" : "No")}");
         Console.WriteLine($"\nPrice tag: {(Price <= 0 ? "Free" : Price.ToString())}");
-        Console.WriteLine($"\nTotal Score: {Score}");
+        Console.WriteLine($"\nTotal Score: {ScoresAverage()}");
         Console.WriteLine($"\nCurrent Rank: {Rank}");
     }
-
+    public double ScoresAverage()
+    {
+        return Scores.Any() ? Scores.Average() : 0;       
+    }
 }

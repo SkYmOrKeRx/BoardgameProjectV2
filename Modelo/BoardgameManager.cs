@@ -19,11 +19,10 @@ internal class BoardgameManager
 
     public static List<Boardgame> LoadAllBoardgames()
     {
+
         List<Boardgame> boardgames = new();
-        foreach (Boardgame boardgame in registeredBoardgames.Values)
-        {
-            boardgames.Add(boardgame);
-        }
+
+        foreach (Boardgame boardgame in registeredBoardgames.Values) { boardgames.Add(boardgame); }
         return boardgames;
     }
 
@@ -43,9 +42,9 @@ internal class BoardgameManager
     public static void ListAllBoardgamesInDB()
     {
         Console.WriteLine("\n");
-        foreach (Boardgame boardgame in BoardgameManager.registeredBoardgames.Values)
+        foreach (Boardgame boardgame in registeredBoardgames.Values)
         {
-            Console.WriteLine($"#{boardgame.Index}: {boardgame.Name}");
+            Console.WriteLine($"#{boardgame.Index+1}: {boardgame.Name} - {boardgame.Score}");
             Thread.Sleep(30);
         }
     }
