@@ -5,9 +5,10 @@ public abstract class Menu
 {
     public static readonly Dictionary<int, Menu> menuOptions = new()
     {
-        { 1, new MenuAddBoardgame() },
-        { 2, new MenuEditBoardgame() },
-        { 3, new MenuRateBoardgame() },
+        { 1, new MenuCheckBoardgameDatabase() },
+        { 2, new MenuAddBoardgame() },
+        { 3, new MenuEditBoardgame() },
+        { 4, new MenuRateBoardgame() },
         { 9, new MenuMain()         }
     };
 

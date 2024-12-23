@@ -14,9 +14,10 @@ internal class MenuMain : Menu
             DisplayTitle();
             Console.WriteLine("\nWelcome to the world's best Boardgame database!");
             Console.WriteLine("\nPlease select an option:" +
-                "\n1-Add a new boardgame to the database" +
-                "\n2-Edit an registered board game and their details" +
-                "\n3-Rate a boardgame" +
+                "\n\n1-Check boardgame database" +
+                "\n2-Add a new boardgame to the database" +
+                "\n3-Edit an registered board game and their details" +
+                "\n4-Rate a boardgame" +
                 "\n4-Leave the application");
 
             ConsoleKeyInfo keyConfirmation = Console.ReadKey(true);

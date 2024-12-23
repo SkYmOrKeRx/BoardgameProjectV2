@@ -10,4 +10,8 @@ MenuMain menuMain = new MenuMain();
 menuMain.ShowMenu();
 
 
+//Implementar Task que retorna ao menu principal a qualquer momento
+//Menu Check All games in Database - paginacao?
+
+
                                                             

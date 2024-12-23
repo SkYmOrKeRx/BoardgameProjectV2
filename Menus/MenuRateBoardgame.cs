@@ -5,8 +5,6 @@ namespace BoardgameProjectV2.Menus;
 
 internal class MenuRateBoardgame : Menu
 {
-    string _string1 = "\n\nSelect the number corresponding to the boardgame to rate it: ";
-
     private string menuName = "***RATE A BOARDGAME MENU***";
 
     public override void ShowMenu()
@@ -29,7 +27,7 @@ internal class MenuRateBoardgame : Menu
 
     public void RateBoardgameMenu()
     {
-
+        
         string userInput;
         string userInput2;
         int newBoardgameScore = 0;
@@ -102,12 +100,11 @@ internal class MenuRateBoardgame : Menu
                 }
             }
 
+            DisplayTitle();
             Console.WriteLine($"\n\nCongratulations!! You rated {newBoardgameNumber}-{registeredBoardgames[newBoardgameNumber-1].Name} with a score of {newBoardgameScore} points");
-            //BoardgameManager.registeredBoardgames[newBoardgameNumber-1].Score = newBoardgameScore;
-            Console.WriteLine(BoardgameManager.registeredBoardgames[newBoardgameNumber - 1].Score); 
-            //BoardgameManager.registeredBoardgames[newBoardgameNumber-1].Scores.Add(newBoardgameScore);
-
-            Console.WriteLine($"{registeredBoardgames[newBoardgameNumber-1].Name} - Average Score {registeredBoardgames[newBoardgameNumber - 1].ScoresAverage}");
+            BoardgameManager.registeredBoardgames[newBoardgameNumber - 1].Scores.Add(newBoardgameScore);
+            Console.WriteLine($"\n\nNow, with a total of {registeredBoardgames[newBoardgameNumber - 1].Scores.Count} reviews, its overall score is {registeredBoardgames[newBoardgameNumber-1].Scores.Average():F1} points");
+            
 
             Console.WriteLine("\n\nPress any key to get back to the main menu!");
             Console.ReadKey();

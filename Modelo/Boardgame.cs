@@ -17,7 +17,7 @@ internal class Boardgame
         LaunchDate = launchDate;
         IsAvailable = isAvailable;
         Price = price;
-        Scores?.Add(score);
+        Scores = new List<int>{ score };
     }
 
     public string Name { get; set; }
@@ -40,16 +40,16 @@ internal class Boardgame
         
     public void ShowDetails()
     {                                                        
-        Console.WriteLine($"\n\nShowing #{Index} {Name} details:");
+        Console.WriteLine($"\n\nShowing #{Index+1} {Name} details:");
         Console.WriteLine($"\n\nDescription: {Description}");
         Console.WriteLine($"\nLaunchDate: {LaunchDate}");
         Console.WriteLine($"\nAvailable to purchase?: {(IsAvailable ? "Yes" : "No")}");
         Console.WriteLine($"\nPrice tag: {(Price <= 0 ? "Free" : Price.ToString())}");
-        Console.WriteLine($"\nTotal Score: {ScoresAverage()}");
+        Console.WriteLine($"\nTotal Score: {ScoresAverage():F1}");
         Console.WriteLine($"\nCurrent Rank: {Rank}");
     }
     public double ScoresAverage()
     {
-        return Scores.Any() ? Scores.Average() : 0;       
+        return Scores.Count > 0 ? Scores.Average() : 0;       
     }
 }

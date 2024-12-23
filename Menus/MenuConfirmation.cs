@@ -48,7 +48,8 @@ public class MenuConfirmation: Menu
         {
             return "***RATE A BOARDGAME MENU***";
         }
-        else return "********CRITICAL ERROR**********";
+        if (selectedMenu is MenuCheckBoardgameDatabase) return "***CHECK BOARDGAME DATABASE MENU***";
+        else return "CRITICAL ERROR??";
     }
 
     public override void ShowMenu()

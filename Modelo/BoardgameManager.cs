@@ -44,7 +44,7 @@ internal class BoardgameManager
         Console.WriteLine("\n");
         foreach (Boardgame boardgame in registeredBoardgames.Values)
         {
-            Console.WriteLine($"#{boardgame.Index+1}: {boardgame.Name} - {boardgame.Score}");
+            Console.WriteLine($"#{boardgame.Index+1}: {boardgame.Name} - {boardgame.ScoresAverage().ToString("F1")}");
             Thread.Sleep(30);
         }
     }
