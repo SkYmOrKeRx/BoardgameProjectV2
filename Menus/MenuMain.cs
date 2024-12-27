@@ -24,13 +24,13 @@ internal class MenuMain : Menu
 
             if (int.TryParse(keyConfirmation.KeyChar.ToString(), out int menuId))
             {
-                if (menuId == 4) 
+                if (menuId == 5) 
                 { 
                     Console.WriteLine("\nExiting application...");
                     Thread.Sleep(2000); 
                     Environment.Exit(0);
                 }
-                else if (menuId < 0 || menuId > 4)
+                else if (menuId < 0 || menuId > 5)
                 {
                     DisplayTitle();
                     Console.WriteLine($"\n\n... There's no option such as '{keyConfirmation.KeyChar.ToString()}'! Try again!");
