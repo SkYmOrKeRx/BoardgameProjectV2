@@ -44,7 +44,7 @@ internal class Boardgame
         Console.WriteLine($"\n\nDescription: {Description}");
         Console.WriteLine($"\nLaunchDate: {LaunchDate}");
         Console.WriteLine($"\nAvailable to purchase?: {(IsAvailable ? "Yes" : "No")}");
-        Console.WriteLine($"\nPrice tag: {(Price <= 0 ? "Free" : Price.ToString())}");
+        Console.WriteLine($"\nPrice tag: ${(Price <= 0 ? "Free" : Price.ToString())}");
         Console.WriteLine($"\nTotal Score: {ScoresAverage():F1}");
         Console.WriteLine($"\nCurrent Rank: {Rank}");
     }

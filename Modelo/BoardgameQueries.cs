@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-
+﻿
 namespace BoardgameProjectV2.Modelo;
 
 internal class BoardgameQueries
@@ -40,10 +37,19 @@ internal class BoardgameQueries
     ///////////////////////// FILTERS ////////////////
 
     internal static List<Boardgame> GetBoardgamesAscendingFilterName(string input)
-    {
-        //Desafio: Minimo 3 letras
-        return newBoardgamesList.FindAll(boardgame => boardgame.Name.Contains(input));
+    {       
+       return newBoardgamesList.FindAll(boardgame => boardgame.Name.Contains(input,StringComparison.OrdinalIgnoreCase)).ToList();
     }
 
+    internal static List<Boardgame> GetBoardgamesAscendingFilterLaunchDate(string input)
+    {
+        return newBoardgamesList.FindAll(boardgame => boardgame.LaunchDate.ToString().Contains(input, StringComparison.OrdinalIgnoreCase)).ToList();
+    }
+
+    internal static List<Boardgame> GetBoardgamesAscendingFilterPrice(string input)
+    {
+        return new List<Boardgame>();
+        
+    }
 
 }
