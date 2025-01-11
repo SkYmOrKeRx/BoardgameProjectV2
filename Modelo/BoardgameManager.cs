@@ -39,7 +39,7 @@ internal class BoardgameManager
         int lastPage = 0;
         foreach (Boardgame boardgame in registeredBoardgames.Values)
         {
-            Console.WriteLine($"#{boardgame.Index+1}: {boardgame.Name} - {boardgame.ScoresAverage().ToString("F1")}");
+            Console.WriteLine($"{boardgame.Index+1}: {boardgame.Name} - {boardgame.ScoresAverage().ToString("F1")}");
             Thread.Sleep(30);
         }
         Console.WriteLine($"\nPage {currentPage}/{lastPage}");
@@ -47,11 +47,11 @@ internal class BoardgameManager
 
     public static void RankAllBoardgamesInDB(List<Boardgame> boardgames)
     {
+
         Console.WriteLine("\n");
         for (int i = 0; i < boardgames.Count; i++)
-        {        
-            BoardgameManager.registeredBoardgames[i].Rank = i + 1;
-            Console.WriteLine($"Rank #{i + 1} - {boardgames[i].Name} - Score {boardgames[i].ScoresAverage().ToString("F1")}");
+        {
+            BoardgameManager.registeredBoardgames[i].Rank = i + 1;            
         }  
     }
 }

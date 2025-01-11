@@ -30,13 +30,6 @@ internal class MenuCheckBoardgameDatabase : Menu
         {3, new BoardgameQueryString(BoardgameQueries.GetBoardgamesAscendingFilterPrice) },
     };
 
-    //private Dictionary<ConsoleKey, Action> menuKeys = new Dictionary<ConsoleKey, Action>()
-    //{
-    //    {ConsoleKey.Escape, () => menuOptions[9].ShowMenu()},
-    //    {ConsoleKey.F1, () => MenuGetBoardgamesQueryList()},
-    //};
-
-
     public override void ShowMenu()
     {
         if (MenuConfirmation.MenuSelectedConfirmation(this)) 
@@ -62,32 +55,14 @@ internal class MenuCheckBoardgameDatabase : Menu
 
     public void CheckBoardgameDatabase()
     {
+        //Fix this code
         Dictionary<ConsoleKey, Action> menuKeys = new()
         {
             {ConsoleKey.Escape, () => menuOptions[9].ShowMenu()},
             {ConsoleKey.F1, () => MenuGetBoardgamesQueryList()},
             {ConsoleKey.F7, () => Console.WriteLine("previous page") },
             {ConsoleKey.F8, () => Console.WriteLine("next page") },
-            {ConsoleKey.D1, () => Console.WriteLine("Aqui deveria ter event e nao um Action..")},
-            {ConsoleKey.NumPad1, () => Console.WriteLine("Você pressionou o número 1.") },
-            { ConsoleKey.D2, () => Console.WriteLine("Você pressionou o número 2.") },
-            {ConsoleKey.NumPad2, () => Console.WriteLine("You pressed num# 2") },
-            { ConsoleKey.D3, () => Console.WriteLine("Você pressionou o número 3.") },
-            {ConsoleKey.NumPad3, () => Console.WriteLine("You pressed num# 3") },
-            { ConsoleKey.D4, () => Console.WriteLine("Você pressionou o número 4.") },
-            {ConsoleKey.NumPad4, () => Console.WriteLine("You pressed num# 4") },
-            { ConsoleKey.D5, () => Console.WriteLine("Você pressionou o número 5.") },
-            {ConsoleKey.NumPad5, () => Console.WriteLine("You pressed num# 5") },
-            { ConsoleKey.D6, () => Console.WriteLine("Você pressionou o número 6.") },
-            {ConsoleKey.NumPad6, () => Console.WriteLine("You pressed num# 6") },
-            { ConsoleKey.D7, () => Console.WriteLine("Você pressionou o número 7.") },
-            {ConsoleKey.NumPad7, () => Console.WriteLine("You pressed num# 7") },
-            { ConsoleKey.D8, () => Console.WriteLine("Você pressionou o número 8.") },
-            {ConsoleKey.NumPad8, () => Console.WriteLine("You pressed num# 8") },
-            { ConsoleKey.D9, () => Console.WriteLine("Você pressionou o número 9.") },
-            {ConsoleKey.NumPad9, () => Console.WriteLine("You pressed num# 9") },
         };
-
   
         List<Boardgame> registeredBoardgames = BoardgameManager.LoadAllBoardgames();
 
@@ -105,81 +80,84 @@ internal class MenuCheckBoardgameDatabase : Menu
         }
         else
         {
-            DisplayTitle();
-            BoardgameManager.ListAllBoardgamesInDB();
-
-            Console.Write("\n\nSelect the number corresponding to the boardgame to check it out or 'F1' for more options:");
-
-            ConsoleKeyInfo keyInput = Console.ReadKey(true);
-
-            menuKeys.TryGetValue(keyInput.Key, out Action action);                    
-
-            action!();
-
-            DisplayTitle();
-
-            if (char.IsDigit(keyInput.KeyChar))
+            while (true)
             {
-                registeredBoardgames[(keyInput.KeyChar - '0') - 1].ShowDetails();
-            }         
+                DisplayTitle();
+                BoardgameManager.ListAllBoardgamesInDB();
 
+                Console.Write("\n\nSelect the number corresponding to the boardgame to check it out or 'F1' for more options:");
+
+                ConsoleKeyInfo keyInput = Console.ReadKey(true);
+
+                DisplayTitle();
+                if (menuKeys.TryGetValue(keyInput.Key, out Action action))
+                {
+                    action!();
+                    //break?                
+                }
+                else if (char.IsDigit(keyInput.KeyChar))
+                {
+                    registeredBoardgames[(keyInput.KeyChar - '0') - 1].ShowDetails();
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine($"\n\n... You must select a valid option! Try again");
+                    Thread.Sleep(1750);
+                }
+            }
         }
+
         Console.Write("\n\nPress any key to check again the database or 'Esc' to leave to the main menu...");
         var newInput = Console.ReadKey(false);
-        if (newInput.Key != ConsoleKey.Escape) 
-        {
-            CheckBoardgameDatabase();           
-        }
         DisplayTitle();
-        Console.WriteLine("\n\n...Going back to the main menu...");
+        if (newInput.Key == ConsoleKey.Escape)
+        {
+            Console.WriteLine("\n\n...Going back to the main menu...");
+            Thread.Sleep(1750);
+            menuOptions[9].ShowMenu();
+        }           
+        Console.WriteLine("\n\n...Checking again the database...");
         Thread.Sleep(1750);
-    }
-
-    void GetBgData()
-    {
+        CheckBoardgameDatabase();
 
     }
 
     private void MenuGetBoardgamesQueryList()
     {
+        Dictionary<ConsoleKey, Action> menuKeys = new()       
+        {
+            {ConsoleKey.Escape, () => menuOptions[9].ShowMenu()},
+            {ConsoleKey.Backspace, () => CheckBoardgameDatabase()},
+            {ConsoleKey.D1, () => OrderQueryMenu()},
+            {ConsoleKey.NumPad1, () => OrderQueryMenu()},
+            { ConsoleKey.D2, () => FilterQueryMenu() },
+            {ConsoleKey.NumPad2, () => FilterQueryMenu() },
+        }; 
+
         while (true)
         {
-            DisplayTitle();
-            Console.WriteLine("\n\nChoose a query type:");
-            Console.WriteLine("\n1-Order");
+            DisplayTitle();            
+            Console.WriteLine("\n\n1-Order");
             Console.WriteLine("2-Filter");
+            Console.WriteLine("\n\nChoose a query type or press 'Esc' to get back to the main menu:");
 
-            var keyInput = Console.ReadKey(false);
+            ConsoleKeyInfo keyInput = Console.ReadKey(true);
 
-
-
-            //Alterar para keyInfo
-            var userInput = Console.ReadLine()!;
-            if (int.TryParse(userInput, out int selectedOption))
+            if(menuKeys.TryGetValue(keyInput.Key, out Action action))
             {
-                if ((selectedOption != 1) && (selectedOption != 2))
-                {
-                    DisplayTitle();
-                    Console.WriteLine($"\n\n... {userInput} is not a valid option! Try again");
-                    Thread.Sleep(1750);
-                }
-                else
-                {
-                    if (selectedOption == 1) OrderQueryMenu();
-                    if (selectedOption == 2) FilterQueryMenu();
-                }
-
+                action!();
             }
             else
             {
                 DisplayTitle();
                 Console.WriteLine($"\n\n... You must select a valid option! Try again");
                 Thread.Sleep(1750);
-            }
+            }            
         }
     }
 
-    private void OrderQueryMenu()
+    public void OrderQueryMenu()
     {
         List<Boardgame> boardgamesOrdered = new();
 
@@ -191,41 +169,46 @@ internal class MenuCheckBoardgameDatabase : Menu
             Console.WriteLine("3 - Order boardgames by price (ascending)");
             Console.WriteLine("4 - Order boardgames by current rank");
             Console.WriteLine("5 - Order boardgames by most reviews");
-            Console.Write("\n\nChoose an option:");
-            var userInput = Console.ReadLine()!;
-            if (int.TryParse(userInput, out int selectedOption))
+            Console.Write("\n\nChoose an option or press 'Esc' to get back to the main menu:");
+
+
+            var keyInput = Console.ReadKey(intercept: true);
+
+            if (boardgameQueriesSorting.TryGetValue(keyInput.KeyChar - '0', out BoardgameQuery? query))
             {
-                if ((selectedOption < 0) && (selectedOption > 6))
+                boardgamesOrdered = query();
+                DisplayTitle();
+                switch (keyInput.KeyChar - '0')
                 {
-                    DisplayTitle();
-                    Console.WriteLine($"\n\n... {userInput} is not a valid option! Try again");
-                    Thread.Sleep(1750);
+                    case 1:
+                        BoardgameQueriesPrinter.PrintOrderByName(boardgamesOrdered);                            
+                        break;
+                    case 2:
+                        BoardgameQueriesPrinter.PrintOrderByLaunchDate(boardgamesOrdered);
+                        break;
+                    case 3:
+                        BoardgameQueriesPrinter.PrintOrderByPrice(boardgamesOrdered);
+                        break;
+                    case 4:
+                        BoardgameQueriesPrinter.PrintOrderByRank(boardgamesOrdered);
+                        break;
+                    case 5:
+                        BoardgameQueriesPrinter.PrintOrderByMostReviews(boardgamesOrdered);
+                        break;
+                    default:
+                        break;
                 }
-                else
-                {
-                    DisplayTitle();
-                    if (boardgameQueriesSorting.TryGetValue(selectedOption, out BoardgameQuery? query)) boardgamesOrdered = query();
-                    switch (selectedOption)
-                    {
-                        case 1:
-                            BoardgameQueriesPrinter.PrintOrderByName(boardgamesOrdered);
-                            break;
-                        case 2:
-                            BoardgameQueriesPrinter.PrintOrderByLaunchDate(boardgamesOrdered);
-                            break;
-                        case 3:
-                            BoardgameQueriesPrinter.PrintOrderByPrice(boardgamesOrdered);
-                            break;
-                        case 4:
-                            BoardgameQueriesPrinter.PrintOrderByRank(boardgamesOrdered);
-                            break;
-                        case 5:
-                            BoardgameQueriesPrinter.PrintOrderByMostReviews(boardgamesOrdered);
-                            break;
-                        default:
-                            break;
-                    }
-                }
+            }
+            else if (keyInput.Key == ConsoleKey.Escape)
+            {
+                DisplayTitle();
+                Console.WriteLine("\n\n...Going back to the main menu...");
+                Thread.Sleep(1750);
+                menuOptions[9].ShowMenu();
+            }
+            else if (keyInput.Key == ConsoleKey.Backspace)
+            {
+                MenuGetBoardgamesQueryList();
             }
             else
             {
@@ -234,10 +217,11 @@ internal class MenuCheckBoardgameDatabase : Menu
                 Thread.Sleep(1750);
             }
 
-            Console.WriteLine("\n\nPress any key to get back to the main menu...");
+            Console.WriteLine("\n\nPress any key to continue...");
             Console.ReadKey();
-            menuOptions[9].ShowMenu();
+            OrderQueryMenu();
         }
+        
     }
 
     private void FilterQueryMenu()
@@ -249,35 +233,38 @@ internal class MenuCheckBoardgameDatabase : Menu
             DisplayTitle();
             Console.WriteLine("\n\n1 - Filter boardgames by name");
             Console.WriteLine("2 - Filter boardgames by launch date");
-            Console.WriteLine("3 - Filter boardgames by range of price (ascending)");
-            Console.Write("\n\nChoose an option:");
-            var userInput = Console.ReadLine()!;
-            if (int.TryParse(userInput, out int selectedOption))
+            Console.WriteLine("3 - Filter boardgames by range of price (ascending)");   
+
+            var keyInput = Console.ReadKey(intercept: true);
+
+            if (boardgameQueriesFiltering.TryGetValue(keyInput.KeyChar - '0', out BoardgameQueryString? queryString))
             {
-                if ((selectedOption < 0) && (selectedOption > 3))
+                //boardgamesOrdered = queryString(keyInput.Key.ToString());
+                DisplayTitle();
+                switch (keyInput.KeyChar - '0')
                 {
-                    DisplayTitle();
-                    Console.WriteLine($"\n\n... {userInput} is not a valid option! Try again");
-                    Thread.Sleep(1750);
+                    case 1:
+                        FilterBoardgamesByName(queryString);
+                        break;
+                    case 2:
+                        FilterBoardgamesByLaunchDate(queryString);                        
+                        break;
+                    case 3:
+                        FilterBoardgamesByPrice(queryString);
+                        break;
+                    default:
+                        break;
                 }
-                else
-                {
-                    if (boardgameQueriesFiltering.TryGetValue(selectedOption, out BoardgameQueryString query)) boardgamesOrdered = query(userInput);                  
-                    switch (selectedOption)
-                    {
-                        case 1:
-                            FilterBoardgamesByName(query!);
-                            break;
-                        case 2:
-                            FilterBoardgamesByLaunchDate(query!);                           
-                            break;
-                        case 3:
-                            FilterBoardgamesByPrice();                            
-                            break;
-                        default:
-                            break;
-                    }
-                }
+
+
+                //aqui chamar showDetails
+                Console.WriteLine("\n\nPress any key to return...");
+                Console.ReadKey();
+                FilterQueryMenu();
+            }
+            else if (keyInput.Key == ConsoleKey.Escape)
+            {
+                MenuGetBoardgamesQueryList();
             }
             else
             {
@@ -285,37 +272,106 @@ internal class MenuCheckBoardgameDatabase : Menu
                 Console.WriteLine($"\n\n... You must select a valid option! Try again");
                 Thread.Sleep(1750);
             }
-
-            Console.WriteLine("\n\nPress any key to get back to the main menu...");
-            Console.ReadKey();
-            menuOptions[9].ShowMenu();
         }
     }
 
     private void FilterBoardgamesByName(BoardgameQueryString query)
     {
+        string userInput;
+        List<Boardgame> boardgamesOrdered = new();
+
         while (true)
         {
+            //implementar tecla Escape para retornar a qualquer momento com tasks e async
+            //if (Console.KeyAvailable)
+            //{
+            //    var key = Console.ReadKey(intercept: true);
+            //    if (key.Key == ConsoleKey.Escape)
+            //    {
+            //        FilterQueryMenu();
+            //        break;
+            //    }
+            //}
 
             DisplayTitle();
+            Console.WriteLine("\n\nFILTER BOARDGAMES BY NAME");
             Console.Write("\n\nAll right, type a boardgame name or part of it: ");
-            var userInput = Console.ReadLine()!;
+            userInput = Console.ReadLine()!;
 
-            if (userInput != null)
+            if (!string.IsNullOrEmpty(userInput) && userInput.Length > 2)
             {
                 DisplayTitle();
-                var boardgamesOrdered = query(userInput);
-                Console.WriteLine("\n");
-                BoardgameQueriesPrinter.PrintFilterByName(boardgamesOrdered);                
+                boardgamesOrdered = query(userInput);
+                Console.WriteLine("\n");                
                 break;
             }
             else
             {
                 DisplayTitle();
-                Console.WriteLine("\n\nYou must type at least 3 characters! Try again!");
+                Console.WriteLine("\n\nYou must type at least 3 characters and something valid! Try again...");
                 Thread.Sleep(1750);
             }
+
+            //if (boardgamesOrdered.TryGetValue(keyInput.Key, out Action action))
+            //{
+            //    action!();
+            //}
+
+            //if (char.IsDigit(keyInput.KeyChar))
+            //{
+            //    ???boardgamesOrdered[(keyInput.KeyChar - '0') - 1].ShowDetails();
+            //}
+
+            //boardgamesOrdered[int.Parse(userInput)].ShowDetails();
+            
         }
+
+        while(true)
+        {
+            DisplayTitle();
+            BoardgameQueriesPrinter.PrintFilterByName(boardgamesOrdered);
+            Console.WriteLine("\n\nSelect the number corresponding to the boardgame to check it out or 'Esc' to leave to the main menu...");
+
+            ConsoleKeyInfo keyInput = Console.ReadKey(true);
+
+            if (keyInput.Key == ConsoleKey.Escape)
+            {
+                menuOptions[9].ShowMenu();
+            }
+            else if (int.TryParse(keyInput.KeyChar.ToString(), out int digit) && int.Parse(keyInput.KeyChar.ToString()) > 0 &&
+                     int.Parse(keyInput.KeyChar.ToString()) <= boardgamesOrdered.Count )
+            {                
+                DisplayTitle();
+                boardgamesOrdered[digit - 1].ShowDetails();
+                break;
+            }
+            else
+            {
+                DisplayTitle();
+                Console.WriteLine($"\n\n... You must select a valid option! Try again");
+                Thread.Sleep(1750);
+            }          
+        }
+        Console.Write("\n\nPress 'Enter' to search again or 'Esc' to leave to the main menu...");
+        var newInput = Console.ReadKey(false);
+
+        if (newInput.Key == ConsoleKey.Escape)
+        {
+            DisplayTitle();
+            Console.WriteLine("\n\n...Going back to the main menu...");
+            Thread.Sleep(1750);
+            menuOptions[9].ShowMenu();
+        }
+        if (newInput.Key == ConsoleKey.Backspace)
+        {
+            FilterQueryMenu();
+            //CheckBoardgameDatabase();
+        }
+        DisplayTitle();
+        Console.WriteLine("\n\n...Let's apply another filter!!");
+        Thread.Sleep(1750);
+        FilterQueryMenu();        
+
     }
 
     private void FilterBoardgamesByLaunchDate(BoardgameQueryString query)
@@ -346,10 +402,30 @@ internal class MenuCheckBoardgameDatabase : Menu
                  
             }
         }
+        Console.Write("\n\nPress 'Enter' to search again or 'Esc' to leave to the main menu...");
+        var newInput = Console.ReadKey(false);
+
+        if (newInput.Key == ConsoleKey.Escape)
+        {
+            DisplayTitle();
+            Console.WriteLine("\n\n...Going back to the main menu...");
+            Thread.Sleep(1750);
+            menuOptions[9].ShowMenu();
+        }
+        if (newInput.Key == ConsoleKey.Backspace)
+        {
+            FilterQueryMenu();
+            //CheckBoardgameDatabase();
+        }
+        DisplayTitle();
+        Console.WriteLine("\n\n...Let's apply another filter!!");
+        Thread.Sleep(1750);
+        FilterQueryMenu();
         
+
     }
 
-    private void FilterBoardgamesByPrice()
+    private void FilterBoardgamesByPrice(BoardgameQueryString query)
     {
         while (true)
         {
